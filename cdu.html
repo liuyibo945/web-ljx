@@ -21,7 +21,7 @@
     color:var(--ink);background:var(--cream);line-height:1.7;overflow-x:hidden;
   }
   body.no-scroll{overflow:hidden;}
-  img{max-width:100%;}
+  img{max-width:100%;display:block;}
 
   /* ---------- 导航 ---------- */
   .nav{
@@ -170,7 +170,11 @@
     display:flex;align-items:center;justify-content:center;
     box-shadow:0 24px 60px rgba(27,67,50,.28);
   }
-  .about-visual .panda-big{font-size:9rem;filter:drop-shadow(0 18px 30px rgba(0,0,0,.3));animation:float 5s ease-in-out infinite;}
+  .about-visual .visual-emoji{
+    font-size:9rem;line-height:1;filter:drop-shadow(0 18px 30px rgba(0,0,0,.3));
+    animation:float 5s ease-in-out infinite;
+    user-select:none;
+  }
   @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
   .about-visual::after{
     content:'CHENGDU · 成都';position:absolute;bottom:24px;left:0;right:0;
@@ -188,18 +192,35 @@
     display:flex;flex-direction:column;
   }
   .card:hover{transform:translateY(-10px);box-shadow:0 26px 52px rgba(45,106,79,.20);}
+
+  /* 卡片图片区：两种形态，photo 放实景图，emoji 放设计化 Emoji */
   .card-img{
     height:168px;display:flex;align-items:center;justify-content:center;
-    font-size:4.2rem;position:relative;overflow:hidden;
+    position:relative;overflow:hidden;
   }
-  .card:nth-child(1) .card-img{background:linear-gradient(135deg,#d8f3dc,#95d5b2);}
-  .card:nth-child(2) .card-img{background:linear-gradient(135deg,#ffe8d6,#ffcf99);}
-  .card:nth-child(3) .card-img{background:linear-gradient(135deg,#ffd6d6,#f6a6a6);}
-  .card:nth-child(4) .card-img{background:linear-gradient(135deg,#d6ecff,#a6c8f6);}
-  .card:nth-child(5) .card-img{background:linear-gradient(135deg,#e0f7e9,#8fd8b0);}
-  .card:nth-child(6) .card-img{background:linear-gradient(135deg,#f0e2ff,#c9a6f6);}
-  .card-img span{transition:transform .4s ease;}
-  .card:hover .card-img span{transform:scale(1.18) rotate(-6deg);}
+  .card-img.photo img{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform .5s ease;
+  }
+  .card:hover .card-img.photo img{transform:scale(1.06);}
+
+  .card-img.emoji{
+    font-size:4.2rem;
+  }
+  .card-img.emoji span{
+    transition:transform .4s ease;
+    position:relative;z-index:1;
+    user-select:none;
+  }
+  .card:hover .card-img.emoji span{transform:scale(1.18) rotate(-6deg);}
+
+  /* Emoji 卡片的专属渐变背景 */
+  .card:nth-child(2) .card-img.emoji{background:linear-gradient(135deg,#f5e6d3,#d4a373);}
+  .card:nth-child(3) .card-img.emoji{background:linear-gradient(135deg,#e8d5d0,#b08968);}
+  .card:nth-child(4) .card-img.emoji{background:linear-gradient(135deg,#d6ecff,#a6c8f6);}
+  .card:nth-child(5) .card-img.emoji{background:linear-gradient(135deg,#d8f3dc,#95d5b2);}
+  .card:nth-child(6) .card-img.emoji{background:linear-gradient(135deg,#e0e0e0,#a0a0a0);}
+
   .card-body{padding:22px 24px 26px;flex:1;display:flex;flex-direction:column;}
   .card-body h3{font-size:1.15rem;color:var(--green-dark);margin-bottom:8px;font-weight:800;}
   .card-body p{font-size:.9rem;color:var(--gray);flex:1;}
@@ -379,7 +400,7 @@
     .nav-links{display:none;}
     .about-grid{grid-template-columns:1fr;gap:36px;}
     .about-visual{min-height:300px;order:-1;}
-    .about-visual .panda-big{font-size:6rem;}
+    .about-visual .visual-emoji{font-size:6rem;}
     section{padding:72px 20px;}
     .hero-stats{gap:26px;}
   }
@@ -444,7 +465,7 @@
         </div>
       </div>
       <div class="about-visual reveal">
-        <div class="panda-big">🐼</div>
+        <div class="visual-emoji" role="img" aria-label="大熊猫">🐼</div>
       </div>
     </div>
   </div>
@@ -459,54 +480,87 @@
       <p>从国宝到古街，从千年水利工程到潮流街区，一次旅行全部打卡。</p>
     </div>
     <div class="cards">
+
+      <!-- 1. 熊猫基地：实景图 -->
       <article class="card reveal">
-        <div class="card-img"><span>🐼</span></div>
+        <div class="card-img photo">
+          <img
+            src="https://images.pexels.com/photos/36783473/pexels-photo-36783473.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="成都大熊猫在树枝上休息"
+            loading="lazy"
+          >
+        </div>
         <div class="card-body">
           <h3>成都大熊猫繁育研究基地</h3>
           <p>全球最大的大熊猫迁地保护基地。清晨是滚滚们最活跃的时候，看它们啃竹子、爬树、打滚，治愈力满分。</p>
           <span class="chip">亲子必去</span>
         </div>
       </article>
+
+      <!-- 2. 宽窄巷子：设计化 Emoji -->
       <article class="card reveal">
-        <div class="card-img"><span>🏮</span></div>
+        <div class="card-img emoji">
+          <span role="img" aria-label="宽窄巷子古街灯笼">🏮</span>
+        </div>
         <div class="card-body">
           <h3>宽窄巷子</h3>
           <p>青黛砖瓦的清代古街。掏耳朵、盖碗茶、川剧变脸、糖画小吃，一次把老成都的闲适体验个遍。</p>
           <span class="chip">老成都味道</span>
         </div>
       </article>
+
+      <!-- 3. 武侯祠 · 锦里：设计化 Emoji -->
       <article class="card reveal">
-        <div class="card-img"><span>⛩️</span></div>
+        <div class="card-img emoji">
+          <span role="img" aria-label="武侯祠红墙古建筑">⛩️</span>
+        </div>
         <div class="card-body">
           <h3>武侯祠 · 锦里</h3>
           <p>三国文化圣地，红墙竹影是热门拍照点。入夜后的锦里灯笼如昼，热闹得像一场穿越。</p>
           <span class="chip">历史文化</span>
         </div>
       </article>
+
+      <!-- 4. 都江堰：实景图 -->
       <article class="card reveal">
-        <div class="card-img"><span>🌊</span></div>
+        <div class="card-img photo">
+          <img
+            src="https://images.pexels.com/photos/36151316/pexels-photo-36151316.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="都江堰水利工程与江水"
+            loading="lazy"
+          >
+        </div>
         <div class="card-body">
           <h3>都江堰</h3>
           <p>两千多年仍在灌溉的超级水利工程。站在鱼嘴看岷江分流，不得不佩服古人的智慧。</p>
           <span class="chip">世界遗产</span>
         </div>
       </article>
+
+      <!-- 5. 青城山：设计化 Emoji -->
       <article class="card reveal">
-        <div class="card-img"><span>🏔️</span></div>
+        <div class="card-img emoji">
+          <span role="img" aria-label="青城山云雾山林">🏔️</span>
+        </div>
         <div class="card-body">
           <h3>青城山</h3>
           <p>“青城天下幽”，道观藏在云雾缭绕的林间，石阶与溪水相伴，是夏天洗肺避暑的首选。</p>
           <span class="chip">避暑胜地</span>
         </div>
       </article>
+
+      <!-- 6. 春熙路 · 太古里：设计化 Emoji -->
       <article class="card reveal">
-        <div class="card-img"><span>🛍️</span></div>
+        <div class="card-img emoji">
+          <span role="img" aria-label="春熙路太古里商圈">🛍️</span>
+        </div>
         <div class="card-body">
           <h3>春熙路 · 太古里</h3>
           <p>潮流与烟火气并存。白天逛街拍照，晚上钻进旁边的小巷吃火锅，一秒切换成都模式。</p>
           <span class="chip">购物夜生活</span>
         </div>
       </article>
+
     </div>
   </div>
 </section>
@@ -657,13 +711,11 @@
       document.body.classList.remove('no-scroll');
     }
   }
-  // 点击遮罩关闭
   document.querySelectorAll('.modal').forEach(function(m){
     m.addEventListener('click', function(e){
       if(e.target === m) closeModal(m.id);
     });
   });
-  // ESC 关闭
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape'){
       document.querySelectorAll('.modal.open').forEach(function(m){
@@ -732,5 +784,30 @@
     toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 3200);
   }
 </script>
+
+<!--
+============================================================
+图片来源说明
+============================================================
+已嵌入的实景图均来自 Pexels，遵循 Pexels License，可免费商用：
+
+1. 成都大熊猫繁育研究基地
+   https://images.pexels.com/photos/36783473/pexels-photo-36783473.jpeg
+
+2. 都江堰
+   https://images.pexels.com/photos/36151316/pexels-photo-36151316.jpeg
+
+其余景点目前使用设计化 Emoji 占位，如果后续想全部替换为实景图，
+可以在 Pexels / Unsplash 搜索以下关键词，找到图片后替换对应
+.card-img.emoji 整块为 .card-img.photo 结构即可：
+
+宽窄巷子：Chengdu ancient street / Kuanzhai Alley
+武侯祠：Wuhou Shrine red wall / 红墙竹影
+青城山：Qingcheng Mountain
+春熙路太古里：Chengdu Taikoo Li / Chunxi Road
+成都火锅：Sichuan hot pot / spicy hot pot
+============================================================
+-->
+
 </body>
 </html>
